@@ -1,0 +1,36 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "copilot-summary-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/copilotSummary/CopilotSummaryWebPart.js",
+          "manifest": "./src/webparts/copilotSummary/CopilotSummaryWebPart.manifest.json"
+        }
+      ]
+    },
+    "notification-summary-adaptive-card-extension": {
+      "components": [
+        {
+          "entrypoint": "./lib/adaptiveCardExtensions/notificationSummary/NotificationSummaryAdaptiveCardExtension.js",
+          "manifest": "./src/adaptiveCardExtensions/notificationSummary/NotificationSummaryAdaptiveCardExtension.manifest.json"
+        }
+      ]
+    },
+    "document-analyzer-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/documentAnalyzer/DocumentAnalyzerWebPart.js",
+          "manifest": "./src/webparts/documentAnalyzer/DocumentAnalyzerWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "CopilotSummaryWebPartStrings": "lib/webparts/copilotSummary/loc/{locale}.js",
+    "NotificationSummaryAdaptiveCardExtensionStrings": "lib/adaptiveCardExtensions/notificationSummary/loc/{locale}.js",
+    "DocumentAnalyzerWebPartStrings": "lib/webparts/documentAnalyzer/loc/{locale}.js"
+  }
+}

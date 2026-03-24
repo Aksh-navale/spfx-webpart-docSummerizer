@@ -1,0 +1,61 @@
+.glassCard {
+  background: rgba(255,255,255,0.25);
+  border-radius: 16px;
+
+  border: 1px solid rgba(255,255,255,0.4);
+
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+
+  backdrop-filter: blur(10px);
+}
+
+.glassHeader {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.glassSubText {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.progressBar {
+  margin-top: 10px;
+  height: 6px;
+  border-radius: 5px;
+  background: linear-gradient(90deg,#7F5AF0,#2CB67D);
+}
+
+
+
+
+
+
+
+
+:global(.ac-textBlock-primary) {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  display: block !important;
+}
+
+:global(.ac-textBlock-primary p) {
+  white-space: normal !important;
+}
+
+
+
+.message {
+  line-height: 1.6;
+}
+
+.assistant strong {
+  display: block;
+  margin-top: 8px;
+}
+
+
+
+
+

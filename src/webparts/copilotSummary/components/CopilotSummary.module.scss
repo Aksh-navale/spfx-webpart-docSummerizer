@@ -1,0 +1,257 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
+.copilotSummary {
+  overflow: hidden;
+  padding: 1em;
+  color: "[theme:bodyText, default: #323130]";
+  color: var(--bodyText);
+  &.teams {
+    font-family: $ms-font-family-fallbacks;
+  }
+}
+
+.welcome {
+  text-align: center;
+}
+
+.welcomeImage {
+  width: 100%;
+  max-width: 420px;
+}
+
+.links {
+  a {
+    text-decoration: none;
+    color: "[theme:link, default:#03787c]";
+    color: var(--link); // note: CSS Custom Properties support is limited to modern browsers only
+
+    &:hover {
+      text-decoration: underline;
+      color: "[theme:linkHovered, default: #014446]";
+      color: var(--linkHovered); // note: CSS Custom Properties support is limited to modern browsers only
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.chatBox {
+  height: 300px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.user {
+  text-align: right;
+  margin: 6px;
+}
+
+.assistant {
+  text-align: left;
+  margin: 6px;
+}
+
+.inputRow {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.wrapper {
+  max-width: 820px;
+  margin: auto;
+  font-family: Segoe UI, sans-serif;
+}
+
+/* HEADER */
+.header {
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 13px;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* INPUTS */
+.fileInput {
+  margin-bottom: 10px;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 80px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  resize: vertical;
+}
+
+/* BUTTONS */
+.primaryBtn {
+  background: #0078d4;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.primaryBtn:hover {
+  background: #106ebe;
+}
+
+.sendBtn {
+  background: #0078d4;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* CHAT */
+.chatBox {
+  height: 360px;
+  overflow-y: auto;
+  background: #f7f7f7;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.message {
+  max-width: 70%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.user {
+  background: #0078d4;
+  color: white;
+  margin-left: auto;
+}
+
+.assistant {
+  background: white;
+  border: 1px solid #e5e5e5;
+}
+
+/* INPUT ROW */
+.inputRow {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* STATES */
+.loading {
+  font-size: 13px;
+  color: #666;
+}
+
+.uploaded {
+  font-size: 12px;
+  color: green;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.typingIndicator {
+  display: inline-flex;
+  gap: 6px;
+  margin-left: 5px;
+}
+
+.typingIndicator span {
+  width: 6px;
+  height: 6px;
+  background: #555;
+  border-radius: 50%;
+  animation: typing 1.4s infinite;
+}
+
+.typingIndicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typingIndicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0% { opacity: 0.2; transform: translateY(0px); }
+  50% { opacity: 1; transform: translateY(-3px); }
+  100% { opacity: 0.2; transform: translateY(0px); }
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "spfx-copilot-content-summary-client-side-solution",
+    "id": "c0a4baef-c006-4eda-a13d-332b4faa4abc",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.20.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "spfx-copilot-content-summary description"
+      },
+      "longDescription": {
+        "default": "spfx-copilot-content-summary description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "spfx-copilot-content-summary Feature",
+        "description": "The feature that activates elements of the spfx-copilot-content-summary solution.",
+        "id": "40844bb0-07a8-4554-98cf-03467b1d840b",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "webApiPermissionRequests": [
+    {
+      "resource": "Microsoft Graph",
+      "scope": "Files.Read.All"
+    },
+    {
+      "resource": "Microsoft Graph",
+      "scope": "ExternalItem.Read.All"
+    },
+    {
+      "resource": "Microsoft Graph",
+      "scope": "FileStorageContainer.Selected"
+    },
+    {
+      "resource": "Microsoft Graph",
+      "scope": "Sites.Read.All"
+    }
+  ],
+  "paths": {
+    "zippedPackage": "solution/spfx-copilot-content-summary.sppkg"
+  }
+}

@@ -1,0 +1,62 @@
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background: #f5f7fb;
+}
+
+/* LEFT */
+.leftSection {
+  flex: 2;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* RIGHT */
+.rightSection {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* BACK */
+.back {
+  cursor: pointer;
+  margin-bottom: 10px;
+  color: #2563eb;
+}
+
+/* PROMPT */
+.promptBox {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.promptBox input {
+  flex: 1;
+  padding: 10px;
+}
+
+.promptBox button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px;
+}
+
+/* RESPONSE */
+.responseBox textarea {
+  width: 100%;
+  height: 300px;
+  padding: 10px;
+}
+
+/* DOC LIST */
+.docItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+}
