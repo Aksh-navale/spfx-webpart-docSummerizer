@@ -14,16 +14,21 @@
   },
   "dependencies": {
     "@fluentui/react": "^8.106.4",
+    "@microsoft/sp-adaptive-card-extension-base": "1.20.0",
     "@microsoft/sp-component-base": "1.20.0",
     "@microsoft/sp-core-library": "1.20.0",
     "@microsoft/sp-lodash-subset": "1.20.0",
     "@microsoft/sp-office-ui-fabric-core": "1.20.0",
     "@microsoft/sp-property-pane": "1.20.0",
     "@microsoft/sp-webpart-base": "1.20.0",
+    "@pnp/spfx-controls-react": "^3.13.0",
+    "pdfjs-dist": "^3.11.174",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "tslib": "2.3.1",
-    "@microsoft/sp-adaptive-card-extension-base": "1.20.0"
+    "react-markdown": "^8.0.7",
+    "remark-gfm": "^3.0.1",
+    "tesseract.js": "^7.0.0",
+    "tslib": "2.3.1"
   },
   "devDependencies": {
     "@microsoft/eslint-config-spfx": "1.20.2",

@@ -213,7 +213,12 @@
   font-size: 12px;
   color: green;
 }
-
+.chatBox {
+  height: 400px; // or your design height
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
 
 
 

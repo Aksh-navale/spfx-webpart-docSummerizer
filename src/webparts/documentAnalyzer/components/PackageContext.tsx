@@ -1,18 +1,61 @@
-import React, { createContext, useState } from "react";
+import * as React from "react";
+import { createContext, useState, ReactNode } from "react";
 
-export const PackageContext = createContext<any>(null);
+/*  FILE TYPE */
+export interface IPackageFile {
+  name: string;
+  url: string;
+  fileObject?: File; 
+  content?: string; 
+}
 
-export const PackageProvider = ({ children }) => {
-  const [packageFiles, setPackageFiles] = useState<string[]>([]);
+/*  CONTEXT TYPE */
+interface IPackageContext {
+  packageFiles: IPackageFile[];
+  togglePackage: (file: IPackageFile) => void;
+  resetAll: () => void;
+}
 
-  const togglePackage = (fileName: string) => {
-    setPackageFiles((prev) =>
-      prev.includes(fileName)
-        ? prev.filter((f) => f !== fileName)
-        : [...prev, fileName]
-    );
-  };
+/* CONTEXT */
+export const PackageContext = createContext<IPackageContext>({
+  packageFiles: [],
+  togglePackage: () => {},
+  resetAll: () => {}
+});
 
+/*  PROVIDER PROPS */
+interface IPackageProviderProps {
+  children: ReactNode;
+}
+
+/*  PROVIDER */
+export const PackageProvider: React.FC<IPackageProviderProps> = ({
+  children
+}) => {
+  const [packageFiles, setPackageFiles] = useState<IPackageFile[]>([]);
+
+  /*  ADD / REMOVE FILE */
+const togglePackage = (file: IPackageFile) => {
+  setPackageFiles((prev) => {
+    const exists = prev.find((f) => f.name === file.name);
+
+    if (exists) {
+      return prev.filter((f) => f.name !== file.name);
+    }
+
+    return [
+      ...prev,
+      {
+        name: file.name,
+        url: file.url || "",
+        fileObject: file.fileObject,
+        content: file.content, // ✅ THIS IS THE FIX
+      },
+    ];
+  });
+};
+
+  /*  RESET */
   const resetAll = () => {
     setPackageFiles([]);
   };

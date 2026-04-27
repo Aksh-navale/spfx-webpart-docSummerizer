@@ -27,10 +27,13 @@
       ]
     }
   },
-  "externals": {},
+  "externals": {
+    "OneDrive": "https://js.live.net/v7.2/OneDrive.js"
+  },
   "localizedResources": {
     "CopilotSummaryWebPartStrings": "lib/webparts/copilotSummary/loc/{locale}.js",
     "NotificationSummaryAdaptiveCardExtensionStrings": "lib/adaptiveCardExtensions/notificationSummary/loc/{locale}.js",
-    "DocumentAnalyzerWebPartStrings": "lib/webparts/documentAnalyzer/loc/{locale}.js"
+    "DocumentAnalyzerWebPartStrings": "lib/webparts/documentAnalyzer/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/en-us.js"
   }
 }
