@@ -8,9 +8,12 @@ import * as pdfjsLib from "pdfjs-dist";
 import pdfWorker from "pdfjs-dist/build/pdf.worker.entry";
 import { GlobalWorkerOptions } from "pdfjs-dist";
 import Tesseract from "tesseract.js";
+<<<<<<< HEAD
 import * as XLSX from "xlsx";
 import mammoth from "mammoth";
 import ReactJson from "react-json-view";
+=======
+>>>>>>> d2f331aeb074d68f1e15fbad2080c76a14cfbc36
 
 (pdfjsLib as any).GlobalWorkerOptions.workerSrc = pdfWorker;
 
@@ -36,7 +39,10 @@ interface IFile {
   content?: string;
   source?: "local" | "sharepoint";
   isProcessing?: boolean;
+<<<<<<< HEAD
   previewUrl?: string;
+=======
+>>>>>>> d2f331aeb074d68f1e15fbad2080c76a14cfbc36
 }
 
 const DocumentPage: React.FC<IDocumentPageProps> = ({
@@ -47,6 +53,7 @@ const DocumentPage: React.FC<IDocumentPageProps> = ({
   const [allFiles, setAllFiles] = useState<IFile[]>([]);
   const [results, setResults] = useState<IFile[]>([]);
 
+<<<<<<< HEAD
   // const [graphFiles, setGraphFiles] = useState<IFile[]>([]);
 
 
@@ -59,6 +66,17 @@ const DocumentPage: React.FC<IDocumentPageProps> = ({
     const buffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
 
+=======
+  const { packageFiles, togglePackage, resetAll } = useContext(PackageContext);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  /* ---------------- PDF TEXT EXTRACTION ---------------- */
+    const extractPdfText = async (file: File): Promise<string> => {
+  try {
+    const buffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+
+>>>>>>> d2f331aeb074d68f1e15fbad2080c76a14cfbc36
     let text = ""; // ✅ MUST be here (top-level inside function)
 
     // STEP 1: normal extraction
@@ -119,6 +137,7 @@ const DocumentPage: React.FC<IDocumentPageProps> = ({
 };
 
   /* ---------------- PROCESS FILE ---------------- */
+<<<<<<< HEAD
    const processFile = async (
   fileObject: File,
   name: string,
@@ -400,6 +419,163 @@ useEffect(() => {
 
   void  runSearch();
 }, [searchValue, allFiles]);
+=======
+  const processFile = async (fileObject: File, name: string, url?: string) => {
+    let content = "";
+
+    if (name.toLowerCase().endsWith(".pdf")) {
+      content = await extractPdfText(fileObject);
+    }
+
+    // ✅ ADD THIS BLOCK
+    else if (name.toLowerCase().endsWith(".txt")) {
+      try {
+        content = await fileObject.text();
+      } catch {
+        content = "Error reading TXT file";
+      }
+    }
+
+    return {
+      id: Date.now(),
+      name,
+      url: url || "",
+      fileObject,
+      content,
+    };
+  };
+
+  /* ---------------- LOCAL UPLOAD ---------------- */
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const files = Array.from(event.target.files || []);
+    if (!files.length) return;
+
+    files.forEach((file) => {
+      // ✅ Show immediately
+      const tempFile: IFile = {
+        id: Date.now() + Math.random(), // ensure unique id
+        name: file.name,
+        source: "local",
+        isProcessing: true,
+      };
+
+      setAllFiles((prev) => [...prev, tempFile]);
+      setResults((prev) => [...prev, tempFile]);
+
+      // ✅ Process in background
+      void (async () => {
+        const processed = await processFile(file, file.name);
+
+        const updated: IFile = {
+          ...processed,
+          source: "local",
+          isProcessing: false,
+        };
+
+        setAllFiles((prev) =>
+          prev.map((f) => (f.id === tempFile.id ? updated : f)),
+        );
+
+        setResults((prev) =>
+          prev.map((f) => (f.id === tempFile.id ? updated : f)),
+        );
+      })();
+    });
+
+    // ✅ Reset input (important for re-uploading same files)
+    event.target.value = "";
+  };
+  /* ---------------- SHAREPOINT FETCH ---------------- */
+  //  const handleSharePointFileSelect = async (file: IFile) => {
+  //   try {
+  //     // ✅ Convert absolute → server relative
+  //     const serverRelativeUrl = file.url?.replace(
+  //       window.location.origin,
+  //       ""
+  //     );
+
+  //     const fileUrl = `${context.pageContext.web.absoluteUrl}/_api/web/getfilebyserverrelativeurl('${serverRelativeUrl}')/$value`;
+
+  //     const res = await context.spHttpClient.get(
+  //       fileUrl,
+  //       SPHttpClient.configurations.v1
+  //     );
+
+  //     const blob = await res.blob();
+
+  //     const fileObject = new File([blob], file.name, {
+  //       type: blob.type || "application/octet-stream",
+  //     });
+
+  //     const processed = await processFile(fileObject, file.name, file.url);
+
+  //     togglePackage(processed);
+  //   } catch (err) {
+  //     console.error("❌ SharePoint fetch failed", err);
+  //   }
+  // };
+
+  /* ---------------- FILE PICKER ---------------- */
+  const handleFilePicker = async (pickerResults: IFilePickerResult[]) => {
+    if (!pickerResults.length) return;
+
+    pickerResults.forEach((file) => {
+      // ✅ show immediately
+      const tempFile: IFile = {
+        id: Date.now() + Math.random(),
+        name: file.fileName,
+        url: file.fileAbsoluteUrl,
+        source: "sharepoint",
+      };
+
+      setAllFiles((prev) => [...prev, tempFile]);
+      setResults((prev) => [...prev, tempFile]);
+
+      // ✅ process in background
+      void (async () => {
+        try {
+          const blob = await file.downloadFileContent();
+
+          const fileObject = new File([blob], file.fileName, {
+            type: blob.type,
+          });
+
+          const processed = await processFile(
+            fileObject,
+            file.fileName,
+            file.fileAbsoluteUrl,
+          );
+
+          const updated: IFile = {
+            ...processed,
+            source: "sharepoint",
+          };
+
+          setAllFiles((prev) =>
+            prev.map((f) => (f.id === tempFile.id ? updated : f)),
+          );
+
+          setResults((prev) =>
+            prev.map((f) => (f.id === tempFile.id ? updated : f)),
+          );
+        } catch (err) {
+          console.error("FilePicker error", err);
+        }
+      })();
+    });
+  };
+
+  /* ---------------- fetchSharePointFiles organization level ---------------- */
+
+  useEffect(() => {
+    const filtered = allFiles.filter((f) =>
+      f.name.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+    setResults(filtered);
+  }, [searchValue, allFiles]);
+>>>>>>> d2f331aeb074d68f1e15fbad2080c76a14cfbc36
 
   /* ---------------- UI ---------------- */
   return (
@@ -490,6 +666,7 @@ useEffect(() => {
                   >
                     {/* FILE INFO */}
                     <div>
+<<<<<<< HEAD
                       <div>
                         {file.name.endsWith(".xlsx") ? "📊" :
                         file.name.endsWith(".docx") ? "📝" :
@@ -541,6 +718,9 @@ useEffect(() => {
                             </p>
                           </div>
                         )}
+=======
+                      <div>📄 {file.name}</div>
+>>>>>>> d2f331aeb074d68f1e15fbad2080c76a14cfbc36
 
                       {/* ✅ SOURCE LABEL */}
                       <div
@@ -551,8 +731,13 @@ useEffect(() => {
                         }}
                       >
                         {file.source === "local"
+<<<<<<< HEAD
                           ? "📁 Local Upload"
                           : "🌐 SharePoint / OneDrive"}
+=======
+                          ? "Uploaded from Local"
+                          : "From SharePoint"}
+>>>>>>> d2f331aeb074d68f1e15fbad2080c76a14cfbc36
                       </div>
                     </div>
 
@@ -569,7 +754,11 @@ useEffect(() => {
                         }}
                         disabled={isSelected || file.isProcessing}
                         onClick={() => {
+<<<<<<< HEAD
                          if (file.isProcessing){
+=======
+                          if (!file.content || file.isProcessing) {
+>>>>>>> d2f331aeb074d68f1e15fbad2080c76a14cfbc36
                             alert("File is still processing. Please wait.");
                             return;
                           }
@@ -672,7 +861,11 @@ useEffect(() => {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
       </div>
+=======
+      </div>{" "}
+>>>>>>> d2f331aeb074d68f1e15fbad2080c76a14cfbc36
     </div>
   );
 };
