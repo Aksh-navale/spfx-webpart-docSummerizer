@@ -19,11 +19,16 @@ export default function CopilotSummary(props: ICopilotSummaryProps) {
   const [instruction, setInstruction] = React.useState("");
 
   const serviceRef = React.useRef(new CopilotService(props.context));
+
+  // ✅ SCROLL REF (END OF CHAT)
   const chatEndRef = React.useRef<HTMLDivElement | null>(null);
 
+  // ✅ AUTO SCROLL TO LATEST MESSAGE
   React.useEffect(() => {
-      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages]);
+    chatEndRef.current?.scrollIntoView({
+      behavior: "smooth"
+    });
+  }, [messages, chatLoading, summaryLoading]);
 
   // CHAT MESSAGE
   const send = async () => {
@@ -42,18 +47,13 @@ export default function CopilotSummary(props: ICopilotSummaryProps) {
     setChatLoading(false);
   };
 
-  // READ FILE TEXT
+  // READ FILE
   const readFileText = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
-      reader.onload = () => {
-        resolve(reader.result as string);
-      };
-
-      reader.onerror = () => {
-        reject("Error reading file");
-      };
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = () => reject("Error reading file");
 
       reader.readAsText(file);
     });
@@ -61,15 +61,7 @@ export default function CopilotSummary(props: ICopilotSummaryProps) {
 
   // DOCUMENT ANALYSIS
   const handleAnalyze = async () => {
-    if (!file) {
-      console.error("No file selected");
-      return;
-    }
-
-    if (!instruction) {
-      console.error("Instruction missing");
-      return;
-    }
+    if (!file || !instruction) return;
 
     setSummaryLoading(true);
 
@@ -77,40 +69,36 @@ export default function CopilotSummary(props: ICopilotSummaryProps) {
       const fileText = (await readFileText(file)).slice(0, 12000);
 
       const prompt = `
-          ${instruction}
+${instruction}
 
-          Document Content:
-          ${fileText}
-          `;
+Document Content:
+${fileText}
+`;
 
       setMessages((m) => [
         ...m,
-        { role: "user", text: `📄 ${file.name}\n${instruction}` },
+        { role: "user", text: `📄 ${file.name}\n${instruction}` }
       ]);
 
       const reply = await serviceRef.current.sendMessage(prompt);
 
       setMessages((m) => [...m, { role: "assistant", text: reply }]);
-    } catch (error) {
-      console.error("ANALYZE ERROR", error);
-
+    } catch {
       setMessages((m) => [
         ...m,
-        { role: "assistant", text: "Error analyzing document." },
+        { role: "assistant", text: "Error analyzing document." }
       ]);
     }
 
     setSummaryLoading(false);
   };
 
-      const formatCopilotText = (text: string) => {
-          if (!text) return "";
-
-          return text
-            .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")   // bold
-            .replace(/\n/g, "<br/>")                            // line breaks
-            .replace(/•/g, "&#8226; ");                         // bullet symbol
-        };
+  const formatCopilotText = (text: string) => {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\n/g, "<br/>")
+      .replace(/•/g, "&#8226; ");
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -129,19 +117,14 @@ export default function CopilotSummary(props: ICopilotSummaryProps) {
           className={styles.fileInput}
           onChange={(e) => {
             const f = e.target.files?.[0];
-
-            console.log("FILE SELECTED →", f);
-
-            if (f) {
-              setFile(f);
-            }
+            if (f) setFile(f);
           }}
         />
 
         {file && (
           <textarea
             className={styles.textarea}
-            placeholder="Enter instruction (ex: summarize in 5 key points)"
+            placeholder="Enter instruction"
             value={instruction}
             onChange={(e) => setInstruction(e.target.value)}
           />
@@ -162,26 +145,28 @@ export default function CopilotSummary(props: ICopilotSummaryProps) {
       <div className={styles.chatBox}>
         {messages.map((m, i) => (
           <div key={i} className={`${styles.message} ${styles[m.role]}`}>
-            <strong>{m.role === "user" ? "You" : "Copilot"}:</strong> 
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: formatCopilotText(m.text)
-                  }}
-                />
-            
+            <strong>{m.role === "user" ? "You" : "Copilot"}:</strong>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: formatCopilotText(m.text)
+              }}
+            />
           </div>
         ))}
 
-       {(chatLoading || summaryLoading) && (
-        <div className={`${styles.message} ${styles.assistant}`}>
-          <strong>Copilot:</strong>
-          <div className={styles.typingIndicator}>
-            <span></span>
-            <span></span>
-            <span></span>
+        {(chatLoading || summaryLoading) && (
+          <div className={`${styles.message} ${styles.assistant}`}>
+            <strong>Copilot:</strong>
+            <div className={styles.typingIndicator}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
+        {/* ✅ IMPORTANT: SCROLL TARGET */}
+        <div ref={chatEndRef} />
       </div>
 
       {/* INPUT */}
@@ -200,6 +185,7 @@ export default function CopilotSummary(props: ICopilotSummaryProps) {
     </div>
   );
 }
+
 
 // List the days of the week
 // Explain what Microsoft 365 Copilot is
