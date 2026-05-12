@@ -60,3 +60,154 @@
   justify-content: space-between;
   padding: 6px 0;
 }
+.markdown{
+  color: black;
+}
+.deleteIcon{
+  cursor: pointer;
+}
+
+// ------------------------------------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+.wrapper {
+  padding: 16px;
+  background: #f5f7fb;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* TOP BAR */
+.topBar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+
+  input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+
+  button {
+    width: 45px;
+    border: none;
+    border-radius: 10px;
+    background: #03034b;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+  }
+}
+
+/* MAIN LAYOUT */
+.mainLayout {
+  display: flex;
+  gap: 20px;
+  height: calc(100% - 70px);
+}
+
+/* LEFT PANEL */
+.leftPanel {
+  flex: 3;
+}
+
+.responseContainer {
+  height: 70%;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+}
+
+.loader {
+  color: #555;
+}
+
+/* RIGHT PANEL */
+.rightPanel {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* BACK LINK */
+.backLink {
+  color: #03034b;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid #dcdcdc;
+
+  h3 {
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+}
+
+/* DOCUMENT LIST */
+.docList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.docItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f3f4f6;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.docName {
+  font-size: 13px;
+}
+
+.deleteIcon {
+  cursor: pointer;
+  color: #888;
+
+  &:hover {
+    color: red;
+  }
+}
+
+/* DROPDOWN */
+.dropdown {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* SUBMIT BUTTON */
+.submitBtn {
+  margin-top: 39%;
+  padding: 12px;
+  background: #03034b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.loaderOverlay {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: #000;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+}

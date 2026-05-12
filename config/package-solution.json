@@ -34,24 +34,7 @@
       }
     ]
   },
-  "webApiPermissionRequests": [
-    {
-      "resource": "Microsoft Graph",
-      "scope": "Files.Read.All"
-    },
-    {
-      "resource": "Microsoft Graph",
-      "scope": "ExternalItem.Read.All"
-    },
-    {
-      "resource": "Microsoft Graph",
-      "scope": "FileStorageContainer.Selected"
-    },
-    {
-      "resource": "Microsoft Graph",
-      "scope": "Sites.Read.All"
-    }
-  ],
+
   "paths": {
     "zippedPackage": "solution/spfx-copilot-content-summary.sppkg"
   }
